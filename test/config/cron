@@ -1,0 +1,3 @@
+0 1 * * * php /home/git/htdocs/hack/hack-php/collect/atnd.php > /dev/null
+30 1 * * * php /home/git/htdocs/hack/hack-php/collect/googleit.php > /dev/null
+0 2 * * * php /home/git/htdocs/hack/hack-php/make_tag.php > /dev/null

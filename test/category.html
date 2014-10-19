@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+<style>
+table{font-size:70%;}
+</style>        
+<body>
+<input type="text" value="" placeholder="tag1<>tag2<>tag3...." id="append" offset="0" >  
+<table id="list" class="table table-striped">
+</table>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
+<script>
+(function () {
+
+$("#append").change (function () {
+    $('#list').append('');
+    append_list('0');
+
+    function append_list(_offset) {
+        var string= $.ajax({
+            url: "category.php?tag="+$('#append').val()+"&num=1000&offset="+_offset,
+            async: false
+        }).responseText;
+console.log(string);
+        var data = (new Function("return " + string))();
+        console.dir(data);
+
+        for (var row in data) {
+            var d = {
+                y : data[row].start_date.substring(0,4)*1,
+                m : data[row].start_date.substring(4,6)*1,
+                d : data[row].start_date.substring(6,8)*1,
+                h : data[row].start_time.substring(0,2)*1,
+                i : data[row].start_time.substring(2,4)*1,
+                s : data[row].start_time.substring(4,6)*1
+            };
+
+            $('#list').append('<tr>'
+                              + '<td>'+data[row].id+'</td>'                              
+                              + '<td>'+d.y+'年'+d.m+'月'+d.d+'日'+d.h+'時'+d.i+'分'+'</td>'
+                              + '<td>'+' <a href="'+data[row].url+'">'+data[row].title+'</a>'+'</td>'
+                              + '<td>'+' ' + data[row].locate+'</td>'
+                              + '<td>'+' ('+data[row].tag1+'/'+data[row].tag2+'/'+data[row].tag3+') '+'</td>'
+                              + '<td>'+ '['+data[row].src+']'+'</td>'
+                              +'</tr>');
+        }
+    }
+});
+
+})();
+
+</script>  
+</body>

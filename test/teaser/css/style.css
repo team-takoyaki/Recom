@@ -1,0 +1,73 @@
+html, body{height:100%;}
+body {position:relative;}
+
+section.image_area {
+    display:block;
+    position:relative;
+    margin:auto;
+    width:800px;
+    height:600px;
+    background:url(https://dl.dropbox.com/u/3166056/icon_big.png) center no-repeat;
+    background-size:contain;
+}
+
+
+section.image_area .event li{
+    position:absolute;
+    display:none;
+    left:300px;
+    margin-left:-75px;
+    bottom:-200px;
+}
+
+section.image_area .event li img{
+    width:150px;
+    backgound:red;
+    border:5px solid white;
+}
+
+
+section.image_area .android{
+    position:absolute;
+    right:15%;
+    bottom:0;
+    display:block;
+    width:100px;
+    height:200px;
+//    background: url(http://foundcreation.com/wp/wp-content/uploads/2011/08/sony_arc.png) no-repeat;
+    background: url(https://dl.dropbox.com/u/3166056/evo.jpg) no-repeat;
+    background-size:contain;
+    animation-name: shake;
+
+    -webkit-transform: rotate(20deg);
+    -moz-transform: rotate(20deg); 
+    transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+}
+
+
+
+section.description_area {
+    height:20%;
+    text-align:center;
+}
+
+.description_area .desc_main {
+    display:block;    
+}
+
+.description_area .desc_sub {
+    float:left;
+    width:50%;
+}
+
+.googleplay_dl {
+    display:inline-block;
+    width:170px;
+    height:41px;
+    background:url(http://www.google.com/help/hc/images/googleplay_logo.png);
+    text-decoration: none;
+    text-indent: -9999px;
+}
+

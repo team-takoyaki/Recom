@@ -1,0 +1,73 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+<style>
+table{font-size:70%;}
+</style>        
+<body>
+<table id="list" class="table table-striped">
+    <tr>
+    <th>ID</th>
+    <th>日付</th>
+    <th>タイトル</th>
+    <th>場所</th>
+    <th>タグ</th>
+    <th>ソース</th>
+    </tr>
+</table>
+<input type="button" value="読み込み" id="append" offset="0" class="btn btn-primary">
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
+<script>
+(function () {
+$(window).scroll(function(){
+    if ($(document).scrollTop() >= $(document).height()*1-screen.height*1) {
+        $("#append").trigger('click');        
+    }else{
+    }
+});
+    
+$("#append").click (function () {
+    var offset = $(this).attr('offset');
+    append_list(offset);
+    offset = offset*1 + 20;    
+    $(this).attr({'offset':offset});
+
+    function append_list(_offset) {
+        var string= $.ajax({
+            url: "list.php?offset="+_offset,
+            async: false
+        }).responseText;
+
+        var data = (new Function("return " + string))();
+        console.dir(data);
+        $('#list').append('<tr class="info"><td colspan="6">'+_offset+'件目</td></tr>>');
+        for (var row in data) {
+            var d = {
+                y : data[row].start_date.substring(0,4)*1,
+                m : data[row].start_date.substring(4,6)*1,
+                d : data[row].start_date.substring(6,8)*1,
+                h : data[row].start_time.substring(0,2)*1,
+                i : data[row].start_time.substring(2,4)*1,
+                s : data[row].start_time.substring(4,6)*1
+            };
+
+            $('#list').append('<tr>'
+                              + '<td>'+data[row].id+'</td>'                              
+                              + '<td>'+d.y+'年'+d.m+'月'+d.d+'日'+d.h+'時'+d.i+'分'+'</td>'
+                              + '<td>'+' <a href="'+data[row].url+'">'+data[row].title+'</a>'+'</td>'
+                              + '<td>'+' ' + data[row].locate+'</td>'
+                              + '<td>'+' ('+data[row].tag1+'/'+data[row].tag2+'/'+data[row].tag3+') '+'</td>'
+                              + '<td>'+ '['+data[row].src+']'+'</td>'
+                              +'</tr>');
+        }
+    }
+});
+
+$("#append").trigger('click'); 
+})();
+
+</script>  
+</body>
